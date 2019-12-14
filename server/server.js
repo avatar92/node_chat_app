@@ -1,23 +1,34 @@
 /*core module */
-const path=require('path')
-
+const path=require('path');
+const http=require('http');
 /*third party module*/
 const express=require('express');
+const socketIO=require('socket.io');
 
-const app=express(); 
+/*setting port for heroku */
+const port = process.env.PORT || 3055;
+
+const app=express();  
+const server=http.createServer(app);
+const io=socketIO(server);
+
+
 
 const publicPath=path.join(__dirname,'../public');
 app.use(express.static(publicPath))
 
-const port = process.env.PORT || 3055; 
+io.on('connection',(socket)=>{
+  console.log('New user connected');
+  socket.on('disconnect',()=>{
+    console.log('User disconnected')
+  });
+}); 
 
 
-app.get('/',(req,res)=>{
-  res.send('index.html')
-});
 
 
 
-app.listen(port,()=>{
+
+server.listen(port,()=>{
   console.log(`server is running in port: ${port}`)
 })
