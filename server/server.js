@@ -22,6 +22,22 @@ io.on('connection',(socket)=>{
   socket.on('disconnect',()=>{
     console.log('User disconnected')
   });
+  // socket.emit('newEmail',{
+  //   from:"amine@example.com",
+  //   text:'hi',
+  //   createdAt:123
+  // });
+  // socket.on('createEmail',(newEmail)=>{
+  //   console.log(newEmail)
+  // });
+  socket.emit('newMessage',{
+    from:'amine',
+    text:'how are you?',
+    createdAt:523
+  });
+  socket.on('createMessage',(newMessage)=>{
+    console.log(newMessage)
+  });
 }); 
 
 
